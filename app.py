@@ -1,3 +1,5 @@
+# Aplicacao principal do MVP de Controle de Recepcao de Academia
+
 import sqlite3
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for
