@@ -14,3 +14,5 @@ Sistema desenvolvido em Python com **Flask** e **SQLite** para gerenciar o cadas
 3. Instale as dependências: `pip install -r requirements.txt`.
 4. Execute a aplicação: `python app.py`.
 5. Para rodar os testes: `PYTHONPATH=. pytest`.
+
+6. ##Pipeline CI configurado com GitHub Actions.
