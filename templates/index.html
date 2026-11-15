@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recepção Academia - MVP</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 900px; margin: auto; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #1e293b; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; }
+        h2 { color: #334155; margin-top: 25px; }
+        form.register-form { display: flex; gap: 10px; margin-bottom: 20px; }
+        input[type="text"], select { padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; flex: 1; }
+        button { padding: 10px 16px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-primary { background-color: #3b82f6; color: white; }
+        .btn-primary:hover { background-color: #2563eb; }
+        .btn-checkin { background-color: #10b981; color: white; }
+        .btn-checkin:hover { background-color: #059669; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: #f8fafc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏋️ Controle de Recepção - Academia</h1>
+
+        <h2>Novo Cadastro de Aluno</h2>
+        <form class="register-form" action="/register" method="POST">
+            <input type="text" name="name" placeholder="Nome completo do aluno" required>
+            <select name="plan">
+                <option value="Mensal">Plano Mensal</option>
+                <option value="Trimestral">Plano Trimestral</option>
+                <option value="Anual">Plano Anual</option>
+            </select>
+            <button type="submit" class="btn-primary">Cadastrar Aluno</button>
+        </form>
+
+        <h2>Alunos Cadastrados</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Plano</th>
+                    <th>Status</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in members %}
+                <tr>
+                    <td>{{ member.id }}</td>
+                    <td>{{ member.name }}</td>
+                    <td>{{ member.plan }}</td>
+                    <td>{{ member.status }}</td>
+                    <td>
+                        <form action="/checkin/{{ member.id }}" method="POST" style="margin:0;">
+                            <button type="submit" class="btn-checkin">Registrar Check-in</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5">Nenhum aluno cadastrado ainda.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Últimos Check-ins na Recepção</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Aluno</th>
+                    <th>Plano</th>
+                    <th>Data e Hora</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in checkins %}
+                <tr>
+                    <td>{{ c.name }}</td>
+                    <td>{{ c.plan }}</td>
+                    <td>{{ c.checkin_time }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="3">Nenhum check-in registrado hoje.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
